@@ -1,0 +1,45 @@
+name: Publish pixel Taipei
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+  schedule:
+    - cron: '0 6,17,19 * * *'
+      timezone: Asia/Taipei
+    - cron: '7 0 * * *'
+      timezone: Asia/Taipei
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v6
+      - name: Verify date and scene boundaries
+        run: |
+          python3 -B test_city.py
+          node test-scene.mjs
+      - name: Generate self-contained website
+        run: |
+          python3 -B city.py --out _site
+          cp index.html embed.html embed.mjs time.mjs FONT-LICENSE.txt _site/
+          touch _site/.nojekyll
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: _site
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v4
