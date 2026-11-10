@@ -4,12 +4,13 @@
 
 - [Notion嵌入版](https://lupinart.github.io/notion-pixel-city/embed.html)：依台灣時間自動切換，開啟Notion的「嵌入」區塊並貼上此網址。建議寬高比2.5:1，例如1000×400；其餘空間透明，畫面完整顯示。
 - [三種場景預覽](https://lupinart.github.io/notion-pixel-city/)。
-- [目前時段的SVG](https://lupinart.github.io/notion-pixel-city/today.svg)：供圖片用途，依GitHub排程重新產生，不能保證Notion封面準點更新。
+- [Notion封面專用SVG（6:1）](https://lupinart.github.io/notion-pixel-city/cover.svg)：3600×600，左右延伸天空與樓群，保留中央標題、2026與101的安全空間。封面「變更」換成此網址，再以「調整位置」微調。依GitHub排程重新產生，不能保證Notion封面準點更新。
+- [原比例SVG（2.5:1）](https://lupinart.github.io/notion-pixel-city/today.svg)：適合一般圖片區塊，較高的構圖不適合寬幅封面。
 - [原始碼](https://github.com/lupinart/notion-pixel-city)。
 
 台北版本：一般樓群下移，日期與年份下方保留至少24px空隙；右側101拉高至390px，以左右留白避開日期。加入北門與台北車站的像素意象。此為地標拼接構圖，非真實視點的城市全景。
 
-index.html比較三種配色；embed.html為純城市嵌入頁。day.svg、dusk.svg、night.svg保持各自配色；today.svg依產生當下的台灣時間選場景。
+index.html比較三種配色；embed.html為純城市嵌入頁。day.svg、dusk.svg、night.svg保持各自配色；today.svg及cover.svg依產生當下的台灣時間選場景。
 
 ## 重新產生
 

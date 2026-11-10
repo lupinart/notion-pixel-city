@@ -70,22 +70,24 @@ def pixel_art(rows, size, y, fill, shadow):
             f'<path d="{path}" fill="{fill}"/>')
 
 
-def render(stamp=None, scene=None):
+def render(stamp=None, scene=None, *, cover=False):
     stamp = taipei_time(stamp)
     scene = scene or scene_for(stamp)
     if scene not in PALETTES:
         raise ValueError('Scene must be day, dusk or night')
     p = PALETTES[scene]
+    width = 3600 if cover else 1500
+    offset = (width - 1500) // 2
     rng = Random(2873)
     stars = Random(1110)
     lights = Random(stamp.date().toordinal())
-    s = [f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1500 600" '
+    s = [f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {width} 600" '
          f'preserveAspectRatio="xMidYMid slice" shape-rendering="crispEdges" role="img" '
          f'aria-labelledby="title desc" data-scene="{scene}">',
          f'<title id="title">PAI任務管理 · 2026 · {scene} · generated {stamp:%Y-%m-%d}</title>',
          '<desc id="desc">PAI任務管理，2026。下方是台北101、北門與台北車站意象，雲與飛機緩慢移動。</desc>',
-         '<style>@keyframes drift{from{transform:translateX(-380px)}to{transform:translateX(1600px)}}'
-         '@keyframes flight{from{transform:translateX(1640px)}to{transform:translateX(-200px)}}'
+         f'<style>@keyframes drift{{from{{transform:translateX({-380-offset}px)}}to{{transform:translateX({1600+offset}px)}}}}'
+         f'@keyframes flight{{from{{transform:translateX({1640+offset}px)}}to{{transform:translateX({-200-offset}px)}}}}'
          '@keyframes blink{0%,65%,100%{opacity:1}75%,85%{opacity:.15}}'
          '.cloud{animation:drift linear infinite}.plane{animation:flight 85s linear infinite;animation-delay:-31s}'
          '.beacon{animation:blink 5s steps(1) infinite}'
@@ -93,13 +95,14 @@ def render(stamp=None, scene=None):
          '</style><defs><pattern id="dither" width="12" height="12" patternUnits="userSpaceOnUse">'
          '<path d="M0 0h6v6H0zM6 6h6v6H6z" fill="#ffffff" opacity=".12"/>'
          '</pattern></defs>']
+    s.append(f'<g transform="translate({offset} 0)">')
     for i, color in enumerate(p['sky']):
-        s.append(rect(0, i * 100, 1500, 100, color))
+        s.append(rect(-offset, i * 100, width, 100, color))
         if i:
-            s.append(rect(0, i * 100 - 12, 1500, 24, 'url(#dither)'))
+            s.append(rect(-offset, i * 100 - 12, width, 24, 'url(#dither)'))
     if scene == 'night':
         for _ in range(65):
-            x, y = stars.randrange(12, 1490, 6), stars.randrange(12, 325, 6)
+            x, y = stars.randrange(12-offset, 1490+offset, 6), stars.randrange(12, 325, 6)
             s.append(rect(x, y, 3, 3, '#d3e3eb', 'opacity=".65"'))
         s.append('<path d="M1170 48h36v12h12v48h-12v12h-36v-12h-12V60h12z" fill="#fff0c8"/>')
         s.append('<path d="M1194 42h24v18h12v36h-12v12h-24V96h-12V60h12z" fill="'+p['sky'][0]+'"/>')
@@ -119,8 +122,8 @@ def render(stamp=None, scene=None):
     # Keep ordinary buildings low; the taller 101 sits beside the date.
     s.append('<g id="city"><g id="skyline">')
     for layer, floor, start, color in [('far', 500, -24, p['far']), ('mid', 566, -40, p['mid']), ('front', 600, -54, p['front'])]:
-        x = start
-        while x < 1500:
+        x = start - offset
+        while x < 1500 + offset:
             w = rng.choice([60, 78, 96, 114])
             height = rng.randrange(48, 102, 6) if layer == 'far' else rng.randrange(72, 132, 6)
             if layer == 'front':
@@ -188,7 +191,7 @@ def render(stamp=None, scene=None):
     s.append('<g id="year" role="img" aria-label="2026">')
     s.append(pixel_art(YEAR_ROWS, 5, 298, p['text'], p['side']))
     s.append('</g>')
-    s.append('</g></svg>')
+    s.append('</g></g></svg>')
     return '\n'.join(s)
 
 
@@ -205,7 +208,8 @@ def main():
     for scene in PALETTES:
         (args.out / f'{scene}.svg').write_text(render(stamp, scene), encoding='utf-8')
     (args.out / 'today.svg').write_text(render(stamp), encoding='utf-8')
-    print(f'{stamp.isoformat()}: generated day.svg, dusk.svg, night.svg, today.svg')
+    (args.out / 'cover.svg').write_text(render(stamp, cover=True), encoding='utf-8')
+    print(f'{stamp.isoformat()}: generated day.svg, dusk.svg, night.svg, today.svg, cover.svg')
 
 
 if __name__ == '__main__':

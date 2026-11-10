@@ -6,6 +6,11 @@ from city import render, taipei_time, scene_for
 
 
 class CityTest(unittest.TestCase):
+    def test_wide_cover_has_full_sky_and_fixed_heading(self):
+        root = ET.fromstring(render(scene='day', cover=True))
+        self.assertEqual(root.attrib['viewBox'], '0 0 3600 600')
+        self.assertEqual(len(root.findall('.//{http://www.w3.org/2000/svg}g[@id="heading-text"]')), 1)
+
     def test_timezone_and_scene_boundaries(self):
         stamp = taipei_time(datetime(2026, 12, 31, 16, 0, tzinfo=timezone.utc))
         self.assertEqual(stamp.isoformat(), '2027-01-01T00:00:00+08:00')
