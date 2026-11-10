@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {createServer} from 'node:http';
 import {readFile} from 'node:fs/promises';
 const {chromium} = await import(process.env.PLAYWRIGHT_MODULE);
-const files = new Set(['embed.html', 'embed.mjs', 'time.mjs', 'day.svg', 'dusk.svg', 'night.svg', 'today.svg']);
+const files = new Set(['embed.html', 'embed.mjs', 'time.mjs', 'dawn.svg', 'day.svg', 'dusk.svg', 'night.svg', 'today.svg']);
 const server = createServer(async (req, res) => {
   const file = new URL(req.url, 'http://localhost').pathname.slice(1);
   if (!files.has(file)) {res.writeHead(404).end(); return;}
@@ -48,6 +48,12 @@ try {
   await page.clock.setSystemTime(new Date('2027-01-01T00:00:00Z'));
   await page.reload();
   await scene('day'); // Taipei 08:00, despite America/Los_Angeles context.
+  await page.clock.setSystemTime(new Date('2027-01-01T20:59:55Z')); // Taipei 04:59:55
+  await page.clock.fastForward(15_000);
+  await scene('dawn');
+  await page.clock.setSystemTime(new Date('2027-01-01T23:59:55Z')); // Taipei 07:59:55
+  await page.clock.fastForward(15_000);
+  await scene('day');
   for (const colorScheme of ['light','dark']) {
     await page.emulateMedia({colorScheme});
     await page.setViewportSize({width:375,height:150});
@@ -56,7 +62,7 @@ try {
     await page.screenshot({path:`live-${colorScheme}-375.png`});
   }
   assert.deepEqual(errors, []);
-  console.log(`PASS ${base}: Taipei day→dusk→night, stalled/late requests, midnight, reload, other timezone, narrow light/dark`);
+  console.log(`PASS ${base}: Taipei day→dusk→night→dawn→day, stalled/late requests, midnight, reload, other timezone, narrow light/dark`);
 } finally {
   await browser.close();
   await new Promise(resolve => server.close(resolve));

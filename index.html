@@ -3,23 +3,26 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="color-scheme" content="light dark">
-<title>像素城市 · 三個時刻</title>
+<title>像素城市 · 四個時刻</title>
 <style>
 :root{color-scheme:light dark;--paper:#f4f1e9;--ink:#293f50;--muted:#5b6e79;--line:#cdd3d1;--space:24px}
 @media(prefers-color-scheme:dark){:root{--paper:#17212b;--ink:#eee9de;--muted:#abb9c1;--line:#3c4d5a}}
 *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:system-ui,sans-serif;padding:48px var(--space)}
-main{max-width:1200px;margin:auto}header{margin-bottom:48px}p{color:var(--muted);line-height:1.7;font-size:16px}
+main{max-width:2200px;margin:auto;min-width:0}header{margin-bottom:32px}p{color:var(--muted);line-height:1.7;font-size:16px}
 h1{font-size:32px;margin:12px 0;font-weight:600;letter-spacing:.04em}header span{font:12px ui-monospace,monospace;letter-spacing:.14em}
-figure{margin:0 0 40px}img{display:block;width:100%;aspect-ratio:2.5;object-fit:cover;image-rendering:pixelated}
-figcaption{display:flex;justify-content:space-between;gap:16px;padding:12px 0;border-bottom:1px solid var(--line);font-size:14px}
+.scenes{display:grid;grid-template-columns:repeat(4,minmax(320px,1fr));gap:24px;overflow-x:auto;padding-bottom:16px}figure{margin:0;min-width:0}img{display:block;width:100%;aspect-ratio:2.5;object-fit:cover;image-rendering:pixelated}
+figcaption{display:flex;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid var(--line);font-size:14px;flex-wrap:wrap}
 a{color:inherit;text-underline-offset:4px}footer{margin-top:48px;font-size:14px;color:var(--muted)}
 @media(max-width:600px){body{padding:28px 16px}h1{font-size:24px}header{margin-bottom:28px}}
 </style>
 <main>
 <header><span>PIXEL TAIPEI / PAI 2026</span><h1>PAI任務管理</h1><p>雲慢慢走，飛機偶爾經過。101、北門與車站，陪你整理每一天。</p><p><a href="cover.svg">Notion封面圖片（6:1）↗</a> · <a href="embed.html">隨台灣時間切換的嵌入版 ↗</a></p></header>
-<figure><img src="day.svg" alt="白天像素台北，PAI任務管理與2026"><figcaption><span>01 / 白天 · 06:00–17:00</span><a href="day.svg" download>下載 SVG</a></figcaption></figure>
-<figure><img src="dusk.svg" alt="黃昏像素城市，粉紫天空與初亮的窗燈"><figcaption><span>02 / 黃昏 · 17:00–19:00</span><a href="dusk.svg" download>下載 SVG</a></figcaption></figure>
-<figure><img src="night.svg" alt="夜晚像素城市，月亮、星星與暖色窗燈"><figcaption><span>03 / 夜晚 · 19:00–06:00</span><a href="night.svg" download>下載 SVG</a></figcaption></figure>
+<section class="scenes" aria-label="由左至右：清晨、白天、黃昏、夜晚">
+<figure><img src="dawn.svg" alt="清晨像素台北，柔和藍灰與暖色晨光"><figcaption><span>01 / 清晨 · 05:00–08:00</span><a href="dawn.svg" download>下載 SVG</a></figcaption></figure>
+<figure><img src="day.svg" alt="白天像素台北，PAI任務管理與2026"><figcaption><span>02 / 白天 · 08:00–17:00</span><a href="day.svg" download>下載 SVG</a></figcaption></figure>
+<figure><img src="dusk.svg" alt="黃昏像素城市，粉紫天空與初亮的窗燈"><figcaption><span>03 / 黃昏 · 17:00–19:00</span><a href="dusk.svg" download>下載 SVG</a></figcaption></figure>
+<figure><img src="night.svg" alt="夜晚像素城市，月亮、星星與暖色窗燈"><figcaption><span>04 / 夜晚 · 19:00–05:00</span><a href="night.svg" download>下載 SVG</a></figcaption></figure>
+</section>
 <footer>標題與2026為固定圖形。嵌入版依台灣時間自動選擇場景；下列單張SVG為固定配色。系統開啟「減少動態效果」時，畫面會靜止。</footer>
 </main>
 </html>

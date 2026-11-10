@@ -6,7 +6,7 @@ const {chromium} = await import(process.env.PLAYWRIGHT_MODULE);
 const browser = await chromium.launch({executablePath: process.env.CHROMIUM_PATH, headless: true});
 try {
   const page = await browser.newPage({viewport: {width: 1500, height: 600}});
-  for (const scene of ['day', 'dusk', 'night']) {
+  for (const scene of ['dawn', 'day', 'dusk', 'night']) {
     await page.goto(pathToFileURL(resolve(`${scene}.svg`)).href);
     assert.equal(await page.locator('svg').getAttribute('data-scene'), scene);
     assert.equal(await page.locator('#heading-text').getAttribute('aria-label'), 'PAI任務管理');
@@ -49,10 +49,14 @@ try {
       await page.setViewportSize({width, height: 1000});
       assert.equal(await page.locator('img').evaluateAll(els => els.every(el => el.complete && el.naturalWidth > 0)), true);
       assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true);
+      const panels = await page.locator('figure').evaluateAll(els => els.map(el => {const b=el.getBoundingClientRect();return {x:b.x,y:b.y};}));
+      assert.equal(panels.length,4);
+      assert.ok(panels.every(p=>Math.abs(p.y-panels[0].y)<1),'Four scenes must stay in one horizontal row');
+      assert.ok(panels.every((p,i)=>!i||p.x>panels[i-1].x),'Scenes must go left to right');
       await page.screenshot({path: `preview-${colorScheme}-${width}.png`, fullPage: true});
     }
   }
-  console.log('PASS: skyline/date clearance, Taipei landmarks, 3 SVG animations, reduced motion, responsive light/dark preview');
+  console.log('PASS: skyline/date clearance, Taipei landmarks, 4 SVG animations, reduced motion, horizontal four-scene light/dark preview');
 } finally {
   await browser.close();
 }

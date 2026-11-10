@@ -8,6 +8,9 @@ from heading_bitmap import ROWS as HEADING, YEAR_ROWS, FONT_FAMILY
 
 TAIPEI = ZoneInfo('Asia/Taipei')
 PALETTES = {
+    'dawn': dict(sky=['#8597bd', '#a0afc9', '#b8c2d1', '#d2cdd0', '#e7d3c9', '#f2dfca'],
+                 far='#a3b0bf', mid='#697f98', front='#3d566e', side='#2d455d',
+                 edge='#8ba3b6', off='#7e95a9', on='#ffe1a5', cloud='#fff0de', shade='#dacbd0', text='#fff4de'),
     'day': dict(sky=['#629dd8', '#72ace1', '#84bae7', '#9ccbeb', '#b7dbee', '#d1e9ee'],
                 far='#8baac4', mid='#547b9c', front='#304f70', side='#233f5e',
                 edge='#729ab8', off='#759ab4', on='#d6edf2', cloud='#f5f5e8', shade='#cfdfdf', text='#fff9e9'),
@@ -44,7 +47,7 @@ def taipei_time(stamp=None):
 
 def scene_for(stamp):
     hour = taipei_time(stamp).hour
-    return 'day' if 6 <= hour < 17 else 'dusk' if 17 <= hour < 19 else 'night'
+    return 'dawn' if 5 <= hour < 8 else 'day' if 8 <= hour < 17 else 'dusk' if 17 <= hour < 19 else 'night'
 
 
 def rect(x, y, w, h, fill, extra=''):
@@ -74,7 +77,7 @@ def render(stamp=None, scene=None, *, cover=False):
     stamp = taipei_time(stamp)
     scene = scene or scene_for(stamp)
     if scene not in PALETTES:
-        raise ValueError('Scene must be day, dusk or night')
+        raise ValueError('Scene must be dawn, day, dusk or night')
     p = PALETTES[scene]
     width = 3600 if cover else 1500
     offset = (width - 1500) // 2
@@ -107,8 +110,8 @@ def render(stamp=None, scene=None, *, cover=False):
         s.append('<path d="M1170 48h36v12h12v48h-12v12h-36v-12h-12V60h12z" fill="#fff0c8"/>')
         s.append('<path d="M1194 42h24v18h12v36h-12v12h-24V96h-12V60h12z" fill="'+p['sky'][0]+'"/>')
     else:
-        sun = '#fff0bd' if scene == 'day' else '#ffcf9d'
-        sy = 70 if scene == 'day' else 245
+        sun = {'dawn':'#fff1d4','day':'#fff0bd','dusk':'#ffcf9d'}[scene]
+        sy = {'dawn':170,'day':70,'dusk':245}[scene]
         s.append(rect(1134, sy-12, 108, 108, sun, 'opacity=".12"'))
         s.append(f'<path d="M1158 {sy}h60v12h12v60h-12v12h-60v-12h-12v-60h12z" fill="{sun}"/>')
     cloud_path = 'M0 36h24V24h24V12h48V0h48v12h24v12h36v12h36v24H0z'
@@ -139,14 +142,14 @@ def render(stamp=None, scene=None, *, cover=False):
                     s.append(rect(x+24, y-48, 6, 6, '#ef9b89', 'class="beacon"'))
                 for wy in range(y+24, floor-12, 24):
                     for wx in range(x+12, x+w-24, 18):
-                        lit = lights.random() < (.64 if scene == 'night' else .3 if scene == 'dusk' else 0)
+                        lit = lights.random() < {'night':.64,'dawn':.25,'dusk':.3,'day':0}[scene]
                         s.append(rect(wx, wy, 6, 12, p['on'] if lit else p['off']))
             x += w + rng.choice([6, 12, 18])
     s.append('</g>')
     # A stylized Taipei montage, not a geographically accurate panorama.
-    teal = {'day': '#3b7c86', 'dusk': '#526c7d', 'night': '#245260'}[scene]
-    roof = {'day': '#746864', 'dusk': '#805f68', 'night': '#55566a'}[scene]
-    brick = {'day': '#af7567', 'dusk': '#ac736e', 'night': '#755862'}[scene]
+    teal = {'dawn':'#4c737e', 'day': '#3b7c86', 'dusk': '#526c7d', 'night': '#245260'}[scene]
+    roof = {'dawn':'#7b737e', 'day': '#746864', 'dusk': '#805f68', 'night': '#55566a'}[scene]
+    brick = {'dawn':'#a7837b', 'day': '#af7567', 'dusk': '#ac736e', 'night': '#755862'}[scene]
     warm = p['on'] if scene != 'day' else '#c8d8d4'
     # Taipei 101: narrow spire, eight stacked tapering sections, wide podium.
     s.append('<g id="taipei-101"><title>台北101意象</title>')
@@ -209,7 +212,7 @@ def main():
         (args.out / f'{scene}.svg').write_text(render(stamp, scene), encoding='utf-8')
     (args.out / 'today.svg').write_text(render(stamp), encoding='utf-8')
     (args.out / 'cover.svg').write_text(render(stamp, cover=True), encoding='utf-8')
-    print(f'{stamp.isoformat()}: generated day.svg, dusk.svg, night.svg, today.svg, cover.svg')
+    print(f'{stamp.isoformat()}: generated dawn.svg, day.svg, dusk.svg, night.svg, today.svg, cover.svg')
 
 
 if __name__ == '__main__':
