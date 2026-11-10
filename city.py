@@ -113,8 +113,9 @@ def render(stamp=None, scene=None, *, cover=False):
         s.append('</g>')
     else:
         sun = {'dawn':'#fff1d4','day':'#fff0bd','dusk':'#ffcf9d'}[scene]
-        sy = {'dawn':170,'day':70,'dusk':245}[scene]
-        s.append('<g id="sun" transform="translate(-888 0)">')
+        # A low-left sunrise, high midday sun, and low-right sunset.
+        sx, sy = {'dawn':(300,245),'day':(750,56),'dusk':(1026,310)}[scene]
+        s.append(f'<g id="sun" transform="translate({sx-1188} 0)">')
         s.append(rect(1134, sy-12, 108, 108, sun, 'opacity=".12"'))
         s.append(f'<path d="M1158 {sy}h60v12h12v60h-12v12h-60v-12h-12v-60h12z" fill="{sun}"/>')
         s.append('</g>')

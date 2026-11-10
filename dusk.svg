@@ -14,9 +14,9 @@
 <rect x="0" y="388" width="1500" height="24" fill="url(#dither)" />
 <rect x="0" y="500" width="1500" height="100" fill="#f5c9a6" />
 <rect x="0" y="488" width="1500" height="24" fill="url(#dither)" />
-<g id="sun" transform="translate(-888 0)">
-<rect x="1134" y="233" width="108" height="108" fill="#ffcf9d" opacity=".12"/>
-<path d="M1158 245h60v12h12v60h-12v12h-60v-12h-12v-60h12z" fill="#ffcf9d"/>
+<g id="sun" transform="translate(-162 0)">
+<rect x="1134" y="298" width="108" height="108" fill="#ffcf9d" opacity=".12"/>
+<path d="M1158 310h60v12h12v60h-12v12h-60v-12h-12v-60h12z" fill="#ffcf9d"/>
 </g>
 <g class="cloud" style="animation-duration:170s;animation-delay:-30s" transform="translate(220 0)"><g transform="translate(0 92) scale(1)"><path d="M0 36h24V24h24V12h48V0h48v12h24v12h36v12h36v24H0z" fill="#f8d3be"/><path d="M0 48h240v12H0zM24 36h24v12H24zM168 24h36v12h-36z" fill="#ce9da6"/></g></g>
 <g class="cloud" style="animation-duration:230s;animation-delay:-145s" transform="translate(220 0)"><g transform="translate(0 108) scale(0.7)"><path d="M0 36h24V24h24V12h48V0h48v12h24v12h36v12h36v24H0z" fill="#f8d3be"/><path d="M0 48h240v12H0zM24 36h24v12H24zM168 24h36v12h-36z" fill="#ce9da6"/></g></g>

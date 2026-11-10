@@ -10,7 +10,7 @@
 
 台北版本：一般樓群下移，日期與年份下方保留至少24px空隙；右側101拉高至390px，以左右留白避開日期。加入北門與台北車站的像素意象。此為地標拼接構圖，非真實視點的城市全景。
 
-本機index.html橫向比較四種配色，不上傳至公開repo或Pages；embed.html為持續保留的純城市嵌入頁。dawn.svg、day.svg、dusk.svg、night.svg保持各自配色；today.svg及cover.svg依產生當下的台灣時間選場景。太陽／月亮移到文字左側，與右側101分開，四時段皆檢查封面裁切及安全間距。
+本機index.html橫向比較四種配色，不上傳至公開repo或Pages；embed.html為持續保留的純城市嵌入頁。dawn.svg、day.svg、dusk.svg、night.svg保持各自配色；today.svg及cover.svg依產生當下的台灣時間選場景。太陽依時段呈現左下日出、中間高處、右下日落的升降動線，夜晚月亮維持左側；四時段皆檢查封面裁切及安全間距。
 
 ## 重新產生
 
