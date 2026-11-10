@@ -34,7 +34,7 @@ jobs:
       - name: Generate self-contained website
         run: |
           python3 -B city.py --out _site
-          cp index.html embed.html embed.mjs time.mjs FONT-LICENSE.txt _site/
+          cp embed.html embed.mjs time.mjs FONT-LICENSE.txt _site/
           touch _site/.nojekyll
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v4

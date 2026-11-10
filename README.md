@@ -3,14 +3,14 @@
 自行繪製、無外部圖片或字型依賴的像素台北。固定標題「PAI任務管理」及2026，含台北101、北門與台北車站意象。
 
 - [Notion嵌入版](https://lupinart.github.io/notion-pixel-city/embed.html)：依台灣時間自動切換，開啟Notion的「嵌入」區塊並貼上此網址。建議寬高比2.5:1，例如1000×400；其餘空間透明，畫面完整顯示。
-- [四種場景橫向預覽](https://lupinart.github.io/notion-pixel-city/)：由左至右清晨、白天、黃昏、夜晚，方便截圖。窄螢幕可在場景列左右捲動，保持橫向排列。
+- 四種場景橫向預覽僅保留本機index.html，公開根網址及index.html已撤下。由左至右清晨、白天、黃昏、夜晚，方便本機截圖；窄螢幕可在場景列左右捲動。
 - [Notion封面專用SVG（6:1）](https://lupinart.github.io/notion-pixel-city/cover.svg)：3600×600，左右延伸天空與樓群，保留中央標題、2026與101的安全空間。封面「變更」換成此網址，再以「調整位置」微調。依GitHub排程重新產生，不能保證Notion封面準點更新。
 - [原比例SVG（2.5:1）](https://lupinart.github.io/notion-pixel-city/today.svg)：適合一般圖片區塊，較高的構圖不適合寬幅封面。
 - [原始碼](https://github.com/lupinart/notion-pixel-city)。
 
 台北版本：一般樓群下移，日期與年份下方保留至少24px空隙；右側101拉高至390px，以左右留白避開日期。加入北門與台北車站的像素意象。此為地標拼接構圖，非真實視點的城市全景。
 
-index.html橫向比較四種配色；embed.html為純城市嵌入頁。dawn.svg、day.svg、dusk.svg、night.svg保持各自配色；today.svg及cover.svg依產生當下的台灣時間選場景。
+本機index.html橫向比較四種配色，不上傳至公開repo或Pages；embed.html為持續保留的純城市嵌入頁。dawn.svg、day.svg、dusk.svg、night.svg保持各自配色；today.svg及cover.svg依產生當下的台灣時間選場景。太陽／月亮移到文字左側，與右側101分開，四時段皆檢查封面裁切及安全間距。
 
 ## 重新產生
 
@@ -35,7 +35,7 @@ GitHub Actions於台灣時間05:00、08:00、17:00、19:00及00:07重新產生�
 
 ## 檢查
 
-在隔離測試副本執行 `python3 -B test_city.py`、`node test-scene.mjs`。瀏覽器測試需既有Playwright與獨立Chromium，透過PLAYWRIGHT_MODULE、CHROMIUM_PATH設定；`test-live.mjs`驗證嵌入頁的跨時段、跨日、非台灣裝置時區、網路逾時與窄畫面，SITE_BASE_URL可指定正式網址。test-preview.mjs檢查SVG圖形、留白、減少動態、明暗及縮放。
+在隔離測試副本執行 `python3 -B test_city.py`、`node test-scene.mjs`。瀏覽器測試需既有Playwright與獨立Chromium，透過PLAYWRIGHT_MODULE、CHROMIUM_PATH設定；`test-live.mjs`驗證嵌入頁的跨時段、跨日、非台灣裝置時區、網路逾時與窄畫面，SITE_BASE_URL可指定正式網址。test-cover.mjs以Python生成四時段封面並檢查桌面／手機裁切；test-preview.mjs與index.html僅保留本機作為預覽QA，不發布。
 
 ## 來源
 

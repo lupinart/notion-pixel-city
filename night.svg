@@ -79,8 +79,10 @@
 <rect x="702" y="36" width="3" height="3" fill="#d3e3eb" opacity=".65"/>
 <rect x="1242" y="312" width="3" height="3" fill="#d3e3eb" opacity=".65"/>
 <rect x="126" y="72" width="3" height="3" fill="#d3e3eb" opacity=".65"/>
+<g id="moon" transform="translate(-888 0)">
 <path d="M1170 48h36v12h12v48h-12v12h-36v-12h-12V60h12z" fill="#fff0c8"/>
 <path d="M1194 42h24v18h12v36h-12v12h-24V96h-12V60h12z" fill="#101d38"/>
+</g>
 <g class="cloud" style="animation-duration:170s;animation-delay:-30s" transform="translate(220 0)"><g transform="translate(0 92) scale(1)"><path d="M0 36h24V24h24V12h48V0h48v12h24v12h36v12h36v24H0z" fill="#70879b"/><path d="M0 48h240v12H0zM24 36h24v12H24zM168 24h36v12h-36z" fill="#4d657d"/></g></g>
 <g class="cloud" style="animation-duration:230s;animation-delay:-145s" transform="translate(220 0)"><g transform="translate(0 108) scale(0.7)"><path d="M0 36h24V24h24V12h48V0h48v12h24v12h36v12h36v24H0z" fill="#70879b"/><path d="M0 48h240v12H0zM24 36h24v12H24zM168 24h36v12h-36z" fill="#4d657d"/></g></g>
 <g class="cloud" style="animation-duration:290s;animation-delay:-215s" transform="translate(220 0)"><g transform="translate(0 45) scale(0.5)"><path d="M0 36h24V24h24V12h48V0h48v12h24v12h36v12h36v24H0z" fill="#70879b"/><path d="M0 48h240v12H0zM24 36h24v12H24zM168 24h36v12h-36z" fill="#4d657d"/></g></g>

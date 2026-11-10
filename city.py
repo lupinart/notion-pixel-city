@@ -107,13 +107,17 @@ def render(stamp=None, scene=None, *, cover=False):
         for _ in range(65):
             x, y = stars.randrange(12-offset, 1490+offset, 6), stars.randrange(12, 325, 6)
             s.append(rect(x, y, 3, 3, '#d3e3eb', 'opacity=".65"'))
+        s.append('<g id="moon" transform="translate(-888 0)">')
         s.append('<path d="M1170 48h36v12h12v48h-12v12h-36v-12h-12V60h12z" fill="#fff0c8"/>')
         s.append('<path d="M1194 42h24v18h12v36h-12v12h-24V96h-12V60h12z" fill="'+p['sky'][0]+'"/>')
+        s.append('</g>')
     else:
         sun = {'dawn':'#fff1d4','day':'#fff0bd','dusk':'#ffcf9d'}[scene]
         sy = {'dawn':170,'day':70,'dusk':245}[scene]
+        s.append('<g id="sun" transform="translate(-888 0)">')
         s.append(rect(1134, sy-12, 108, 108, sun, 'opacity=".12"'))
         s.append(f'<path d="M1158 {sy}h60v12h12v60h-12v12h-60v-12h-12v-60h12z" fill="{sun}"/>')
+        s.append('</g>')
     cloud_path = 'M0 36h24V24h24V12h48V0h48v12h24v12h36v12h36v24H0z'
     for y, scale, speed, delay in [(92, 1, 170, -30), (108, .7, 230, -145), (45, .5, 290, -215)]:
         s.append(f'<g class="cloud" style="animation-duration:{speed}s;animation-delay:{delay}s" transform="translate(220 0)">'
